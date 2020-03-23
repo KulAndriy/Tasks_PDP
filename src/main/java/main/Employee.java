@@ -68,7 +68,7 @@ public class Employee implements Comparable <Employee>{
         return firstName;
     }
 
-        public String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
