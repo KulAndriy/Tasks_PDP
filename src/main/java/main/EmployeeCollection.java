@@ -3,7 +3,8 @@ package main;
 import java.util.*;
 
 public class EmployeeCollection {
-    private List<Employee> collectionEmployeeList(){
+
+    public List<Employee> getEmployeesList(){
         List<Employee> employeeList = new ArrayList<>();
         employeeList.add(new Employee(1, "Andriy", "Barabanov", "Lviv", 23));
         employeeList.add(new Employee(2, "Oleg", "Kostyshyn", "New York", 40));
@@ -24,18 +25,14 @@ public class EmployeeCollection {
         employeeList.add(new Employee(1, "Andriy", "Barabanov", "Lviv", 23));
         employeeList.add(new Employee(7, "Anatoloi", "Fabra", "Odesa", 30));
         employeeList.add(new Employee(11, "Borys", "Var", "Odesa", 28));
-        return employeeList;
+        return new ArrayList<>(employeeList);
     }
 
-    public List<Employee> getEmployeesList(){
-        return new ArrayList<>(collectionEmployeeList());
-    }
-
-    public Set<Employee> getEmployeesSet(List<Employee> employeeList){
-        return new LinkedHashSet<>(collectionEmployeeList());
+    public Set<Employee> getEmployeesSet(){
+        return new HashSet<>(getEmployeesList());
     }
 
     public Set<Employee> getEmployeesTreeSet(){
-        return new TreeSet<>(collectionEmployeeList());
+        return new TreeSet<>(getEmployeesList());
     }
 }
