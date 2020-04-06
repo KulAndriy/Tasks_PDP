@@ -5,38 +5,14 @@ public class Employee implements Comparable <Employee>{
     private String firstName;
     private String lastName;
     private String address;
+    private int age;
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Employee)) return false;
-
-        Employee employee = (Employee) o;
-
-        if (getId() != employee.getId()) return false;
-        if (!getFirstName().equals(employee.getFirstName())) return false;
-        return getLastName().equals(employee.getLastName());
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId();
-        result = 31 * result + getFirstName().hashCode();
-        result = 31 * result + getLastName().hashCode();
-        return result;
-    }
-
-    public void setFirstName(String firstName) {
+    public Employee(int id, String firstName, String lastName, String address, int age) {
+        this.id = id;
         this.firstName = firstName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public int getAge() {
-        return age;
+        this.lastName = lastName;
+        this.address = address;
+        this.age = age;
     }
 
     @Override
@@ -49,16 +25,27 @@ public class Employee implements Comparable <Employee>{
                 ", age=" + age +
                 '}';
     }
-
-    public Employee(int id, String firstName, String lastName, String address, int age) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.age = age;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
+        Employee employee = (Employee) o;
+        return id == employee.getId()
+                && age == employee.getAge()
+                && (firstName == employee.getFirstName() || (firstName != null && firstName.equals(employee.getFirstName())))
+                && (lastName == employee.getLastName() || (lastName != null && lastName.equals(employee.getLastName())))
+                && (address == employee.getAddress() || (address != null && address.equals(employee.getAddress())));
     }
 
-    private int age;
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getFirstName().hashCode();
+        result = 31 * result + getLastName().hashCode();
+        return result;
+    }
 
     public int getId() {
         return id;
@@ -72,18 +59,14 @@ public class Employee implements Comparable <Employee>{
         return lastName;
     }
 
-//    @Override
-//    public int compareTo(main.Employee o) {
-//        if (id == o.id) {
-//            return 0;
-//        }else if (id < o.id){
-//            return -1;
-//        }else {
-//            return 1;
-//        }
+    public String getAddress() {
+        return address;
+    }
 
-        @Override
-        public int compareTo(Employee o) {
+    public int getAge() { return age; }
+
+    @Override
+    public int compareTo(Employee o) {
         return getFirstName().compareTo(o.firstName);
     }
 }

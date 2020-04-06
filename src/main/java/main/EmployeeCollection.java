@@ -6,8 +6,8 @@ public class EmployeeCollection {
 
     public List<Employee> getEmployeesList(){
         List<Employee> employeeList = new ArrayList<>();
-        employeeList.add(new Employee(1, "Andriy", "Barabanov", "Lviv", 23));
-        employeeList.add(new Employee(2, "Oleg", "Kostyshyn", "New York", 40));
+        employeeList.add(new Employee(1, "Andriy", "Barabanov", "Lviv", 19));
+        employeeList.add(new Employee(2, "Oleg", "Kostyshyn", "New York", 4));
         employeeList.add(new Employee(2, "Oleg", "Kostyuk", "Kyiv", 21));
         employeeList.add(new Employee(3, "Vasl", "Borovych", "Lviv", 71));
         employeeList.add(new Employee(4, "Dmytro", "Vanish", "Kyiv", 28));
@@ -25,7 +25,7 @@ public class EmployeeCollection {
         employeeList.add(new Employee(1, "Andriy", "Barabanov", "Lviv", 23));
         employeeList.add(new Employee(7, "Anatoloi", "Fabra", "Odesa", 30));
         employeeList.add(new Employee(11, "Borys", "Var", "Odesa", 28));
-        return new ArrayList<>(employeeList);
+        return employeeList;
     }
 
     public Set<Employee> getEmployeesSet(){

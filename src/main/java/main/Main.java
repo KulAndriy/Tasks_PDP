@@ -1,6 +1,8 @@
 package main;
 
-import java.util.HashSet;
+import comparator.ComparatorProcessor;
+import comparator.ComparatorType;
+
 import java.util.List;
 import java.util.Set;
 
@@ -9,6 +11,7 @@ public class Main {
         EmployeeCollection employeeCollection = new EmployeeCollection();
         SortEmployee sortEmployee = new SortEmployee();
         EmployeesProcessor employeesProcessor = new EmployeesProcessor();
+        ComparatorProcessor comparatorProcessor = new ComparatorProcessor();
 
         /**
          * Create a HashSet collection
@@ -29,7 +32,7 @@ public class Main {
         /**
          * Sorting HashSet using Collections class with Comparator
          */
-        Set<Employee> sortingUsingCollectionsWithComparator = sortEmployee.sortUsingComparatorAndCollections(employeeSet);
+        Set<Employee> sortingUsingCollectionsWithComparator = sortEmployee.sortUsingComparatorAndCollections(employeeSet, comparatorProcessor.getComparator(ComparatorType.LAST_NAME_SORTED));
         System.out.println("Sorting HashSet using Collections class with Comparator: " + " size " + sortingUsingCollectionsWithComparator.size());
         sortingUsingCollectionsWithComparator.forEach(System.out::println);
         System.out.println();
@@ -45,24 +48,32 @@ public class Main {
         /**
          * Sorting HashSet using StreamAPI and Comparator
          */
-        Set<Employee> sortingUsingStreamWithComparator = sortEmployee.sortUsingComparatorAndStream(employeeSet);
+        Set<Employee> sortingUsingStreamWithComparator = sortEmployee.sortUsingComparatorAndStream(employeeSet, comparatorProcessor.getComparator(ComparatorType.LAST_NAME_SORTED));
         System.out.println("Sorting HashSet using Stream API and Comparator: " + " size " + sortingUsingStreamWithComparator.size());
         sortingUsingStreamWithComparator.forEach(System.out::println);
         System.out.println();
+
+        /**
+         * Конвертувати HashSet в TreeSet
+         * */
+        Set<Employee> convertingHashSetToTreeSet = sortEmployee.convertHashSetToTreeSet(employeeSet);
+        System.out.println("Converting HashSet to TreeSet: " + " size " + convertingHashSetToTreeSet.size());
+        convertingHashSetToTreeSet.forEach(System.out::println);
+        System.out.println();
+
+
 
         /**
          * TASK #1
          * Витягнути ліст імен, Видалити всіх Олегів з ліста (відповідно, щоб у лісті було їх хоча б кілька)
          */
 
-        List<String> removeNameWithForeach = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(),ExecutionType.FOREACH);
-        System.out.println("List of names without name Oleg by foreach:  size: " + removeNameWithForeach.size() + "\n" + removeNameWithForeach + "\n");
-
         List<String> removeNameWithIterator = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(),ExecutionType.ITERATOR);
         System.out.println("List of names without name Oleg by Iterator:  size: " + removeNameWithIterator.size() + "\n" + removeNameWithIterator + "\n");
 
         List<String> removeNameWithStream = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(),ExecutionType.STREAM);
         System.out.println("List of names without name Oleg by Stream API:  size: " + removeNameWithStream.size() + "\n" + removeNameWithStream + "\n");
+        System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
          * TASK #2
@@ -70,7 +81,7 @@ public class Main {
          */
 
         List<String> changeNameWithForeach = employeesProcessor.getChangedNameOfEmployee(employeeCollection.getEmployeesList(),
-                ExecutionType.FOREACH, "Andriy", "Vasyla");
+                ExecutionType.FOREACH, "Andriy", "Vasyli");
         System.out.println("List of names wit replacement name Andriy to Vasyl by foreach:  size: " + changeNameWithForeach.size() + "\n" + changeNameWithForeach + "\n");
 
         List<String> changeNameWithIterator = employeesProcessor.getChangedNameOfEmployee(employeeCollection.getEmployeesList(),
@@ -80,6 +91,7 @@ public class Main {
         List<String> changeNameWithStream = employeesProcessor.getChangedNameOfEmployee(employeeCollection.getEmployeesList(),
                 ExecutionType.STREAM, "Andriy", "Vasylaaa");
         System.out.println("List of names wit replacement name Andriy to Vasyl by Stream API:  size: " + changeNameWithStream.size() + "\n" + changeNameWithStream + "\n");
+        System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
          * TASK #3
@@ -99,102 +111,98 @@ public class Main {
         System.out.println("The List where age of Employees more than 25 by Stream API:  size " + employeesMoreTwentyFiveAgeStreamAPI.size());
         employeesMoreTwentyFiveAgeStreamAPI.forEach(System.out::println);
         System.out.println();
+        System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
          * TASK #4
          * Знайти будь-якого працівника, якій живе у Львові
          */
-        List<Employee> findEmployeesAddressWithForeach = employeesProcessor.getEmployeesAddress(employeeCollection.getEmployeesList(),
+        Employee findEmployeesAddressWithForeach = employeesProcessor.getEmployeeByAddress(employeeCollection.getEmployeesList(),
                 ExecutionType.FOREACH, "Kyiv");
-        System.out.println("Employee who lives in Kyiv:  size: " + findEmployeesAddressWithForeach.size() + "\n" + findEmployeesAddressWithForeach + "\n");
+        System.out.println("Employee who lives in Kyiv:  size: " + findEmployeesAddressWithForeach + "\n");
 
-        List<Employee> findEmployeesAddressWithIterator = employeesProcessor.getEmployeesAddress(employeeCollection.getEmployeesList(),
+        Employee findEmployeesAddressWithIterator = employeesProcessor.getEmployeeByAddress(employeeCollection.getEmployeesList(),
                 ExecutionType.ITERATOR,"New York");
-        System.out.println("Employee who lives in New York:  size: " + findEmployeesAddressWithIterator.size() + "\n" + findEmployeesAddressWithIterator + "\n");
+        System.out.println("Employee who lives in New York:  size: " + findEmployeesAddressWithIterator + "\n");
 
-        employeesProcessor.getEmployeesAddress(employeeCollection.getEmployeesList(), ExecutionType.STREAM, "Lviv");    //?????????????????????????????????????????/
+        Employee findEmployeesAddressWithStream= employeesProcessor.getEmployeeByAddress(employeeCollection.getEmployeesList(),
+                ExecutionType.STREAM,"Lviv");
+        System.out.println("Employee who lives in Lviv:  size: " + findEmployeesAddressWithStream + "\n");
+        System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
          * TASK #5
          * Знайти чи є серед працівників хтось, хто живе у Києві
          */
-        boolean addressOfEmployeesWithForeach = employeesProcessor.getAddressOfEmployee(employeeCollection.getEmployeesList(),
+        boolean addressOfEmployeesWithForeach = employeesProcessor.isEmployeeLivesByAddress(employeeCollection.getEmployeesList(),
                 ExecutionType.FOREACH, "Kyiv");
         System.out.println("Is here employee who lives in Kyiv? - Foreach: " + addressOfEmployeesWithForeach + "\n");
 
-        boolean addressOfEmployeesWithIterator = employeesProcessor.getAddressOfEmployee(employeeCollection.getEmployeesList(),
+        boolean addressOfEmployeesWithIterator = employeesProcessor.isEmployeeLivesByAddress(employeeCollection.getEmployeesList(),
                 ExecutionType.ITERATOR, "Kyiv");
         System.out.println("Is here employee who lives in Kyiv? - Iterator: " + addressOfEmployeesWithIterator + "\n");
 
-       boolean addressOfEmployeesWithStreamAPI = employeesProcessor.getAddressOfEmployee(employeeCollection.getEmployeesList(),
+       boolean addressOfEmployeesWithStreamAPI = employeesProcessor.isEmployeeLivesByAddress(employeeCollection.getEmployeesList(),
                 ExecutionType.STREAM, "Kyiv");
         System.out.println("Is here employee who lives in Kyiv? Stream API: " + addressOfEmployeesWithStreamAPI + "\n");
+        System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
          * TASK #6
          * Знайти всіх працівників віком більше = 70 років і повернути нову колекцію з прізвищами цих працівників, добавивши до кожного "Stariy Perdun"
          */
-        List<Employee> employeesWithAgeMoreThanSeventyForeach = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.FOREACH);
-        System.out.println("The List of employees where age more than 70 with concatenation by Foreach:  size " + employeesWithAgeMoreThanSeventyForeach.size());
+        List<String> employeesWithAgeMoreThanSeventyForeach = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.FOREACH,
+                " Staryy Perdun");
+        System.out.println("The List of Employees Last names where age more than 70 with concatenation by Foreach:  size " + employeesWithAgeMoreThanSeventyForeach.size());
         employeesWithAgeMoreThanSeventyForeach.forEach(System.out::println);
         System.out.println();
 
-        List<Employee> employeesWithAgeMoreThanSeventyIterator = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.ITERATOR);
-        System.out.println("The List of employees where age more than 70 with concatenation by Iterator:  size " + employeesWithAgeMoreThanSeventyIterator.size());
+        List<String> employeesWithAgeMoreThanSeventyIterator = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.ITERATOR,
+                " Staryy Perdun");
+        System.out.println("The List of Employees Last names where age more than 70 with concatenation by Iterator:  size " + employeesWithAgeMoreThanSeventyIterator.size());
         employeesWithAgeMoreThanSeventyIterator.forEach(System.out::println);
         System.out.println();
 
-        List<Employee> employeesWithAgeMoreThanSeventyStreamAPI = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.STREAM);
-        System.out.println("The List of employees where age more than 70 with concatenation by Stream API:  size " + employeesWithAgeMoreThanSeventyStreamAPI.size());
+        List<String> employeesWithAgeMoreThanSeventyStreamAPI = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.STREAM,
+                " Staryy Perdun");
+        System.out.println("The List of Employees Last names where age more than 70 with concatenation by Stream API:  size " + employeesWithAgeMoreThanSeventyStreamAPI.size());
         employeesWithAgeMoreThanSeventyStreamAPI.forEach(System.out::println);
         System.out.println();
+        System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
          * TASK #7
          * Знайти всіх працівників, хто живе у києві та повернути колекцію унікальних їх імен
          */
-        Set<String> employeesByAddressWithForeach = employeesProcessor.getEmployeesByAddress(employeeCollection.getEmployeesList(),
+        Set<String> employeesByAddressWithForeach = employeesProcessor.getDistinctEmployeesNameByAddress(employeeCollection.getEmployeesList(),
                 ExecutionType.FOREACH, "Kyiv");
         System.out.println("Set with unique fistName who lives in Kyiv by foreach:  size: " + employeesByAddressWithForeach.size() + "\n" + employeesByAddressWithForeach + "\n");
 
-        Set<String> employeesByAddressWithIterator = employeesProcessor.getEmployeesByAddress(employeeCollection.getEmployeesList(),
+        Set<String> employeesByAddressWithIterator = employeesProcessor.getDistinctEmployeesNameByAddress(employeeCollection.getEmployeesList(),
                 ExecutionType.ITERATOR,"Kyiv");
         System.out.println("Set with unique fistName who lives in Kyiv by Iterator:  size: " + employeesByAddressWithIterator.size() + "\n" + employeesByAddressWithIterator + "\n");
 
-        Set<String> employeesByAddressWithStream = employeesProcessor.getEmployeesByAddress(employeeCollection.getEmployeesList(),
+        Set<String> employeesByAddressWithStream = employeesProcessor.getDistinctEmployeesNameByAddress(employeeCollection.getEmployeesList(),
                 ExecutionType.STREAM, "Kyiv");
         System.out.println("Set with unique fistName who lives in Kyiv by Stream API:  size: " + employeesByAddressWithStream.size() + "\n" + employeesByAddressWithStream + "\n");
+        System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
          * TASK #8
          * Вивести дані просто кожного працівника в консоль і витягнути колекцію адрес
          */
-        Set<String> addressesOfEmployeesWithForeach = employeesProcessor.getAddressOfEmployees(employeeCollection.getEmployeesList(),
+        Set<String> addressesOfEmployeesWithForeach = employeesProcessor.getToStringAndAddressOfEmployees(employeeCollection.getEmployeesList(),
                 ExecutionType.FOREACH);
-        System.out.println("The Set with unique addresses by foreach:  size: " + addressesOfEmployeesWithForeach.size() + "\n" + addressesOfEmployeesWithForeach + "\n");
-        for (Employee e:employeeCollection.getEmployeesList()){
-            System.out.println(e.getFirstName() + " " +e.getLastName() + " - Id " + e.getId() + ", live in " + e.getAddress()
-                    + " and his/her age " + e.getAge());
-        }
-        System.out.println();
+        System.out.println("\n" + "The Set with unique addresses by foreach:  size: " + addressesOfEmployeesWithForeach.size() + "\n" + addressesOfEmployeesWithForeach + "\n");
 
-        Set<String> addressesOfEmployeesWithIterator = employeesProcessor.getAddressOfEmployees(employeeCollection.getEmployeesList(),
+        Set<String> addressesOfEmployeesWithIterator = employeesProcessor.getToStringAndAddressOfEmployees(employeeCollection.getEmployeesList(),
                 ExecutionType.ITERATOR);
-        System.out.println("The Set with unique addresses by Iterator:  size: " + addressesOfEmployeesWithIterator.size() + "\n" + addressesOfEmployeesWithIterator + "\n");
-        for (Employee e:employeeCollection.getEmployeesList()){
-            System.out.println(e.getFirstName() + " " +e.getLastName() + " - Id " + e.getId() + ", live in " + e.getAddress()
-                    + " and his/her age " + e.getAge());
-        }
-        System.out.println();
+        System.out.println("\n" + "The Set with unique addresses by Iterator:  size: " + addressesOfEmployeesWithIterator.size() + "\n" + addressesOfEmployeesWithIterator + "\n");
 
-        Set<String> addressesOfEmployeesWithStream = employeesProcessor.getAddressOfEmployees(employeeCollection.getEmployeesList(),
+        Set<String> addressesOfEmployeesWithStream = employeesProcessor.getToStringAndAddressOfEmployees(employeeCollection.getEmployeesList(),
                 ExecutionType.STREAM);
-        System.out.println("The Set with unique addresses by Stream API:  size: " + addressesOfEmployeesWithStream.size() + "\n" + addressesOfEmployeesWithStream + "\n");
-        for (Employee e:employeeCollection.getEmployeesList()){
-            System.out.println(e.getFirstName() + " " +e.getLastName() + " - Id " + e.getId() + ", live in " + e.getAddress()
-                    + " and his/her age " + e.getAge());
-        }
-        System.out.println();
+        System.out.println("\n" + "The Set with unique addresses by Stream API:  size: " + addressesOfEmployeesWithStream.size() + "\n" + addressesOfEmployeesWithStream + "\n");
+        System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
          * TASK #9
@@ -208,6 +216,7 @@ public class Main {
 
         List<String> fiveEmployeesNameWithStream = employeesProcessor.getFiveEmployeesName(employeeCollection.getEmployeesList(), ExecutionType.STREAM);
         System.out.println("List of name by Stream API:  size: " + fiveEmployeesNameWithStream.size() + "\n" + fiveEmployeesNameWithStream + "\n");
+        System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
          * TASK #10
@@ -224,20 +233,21 @@ public class Main {
         Integer sumOfAgeWithStreamAPI = employeesProcessor.getSumOfAge(employeeCollection.getEmployeesList(),
                 ExecutionType.STREAM);
         System.out.println("The sum of employees age by Stream API is: " + sumOfAgeWithStreamAPI + "\n");
+        System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
          * TASK #11
          * Перевірити, чи всі працівники старше 18ти
          */
-        boolean allEmployeesOldestEighteenWithForeach = employeesProcessor.checkIfAllEmployeesOldestEighteen(employeeCollection.getEmployeesList(),
+        boolean allEmployeesOldestEighteenWithForeach = employeesProcessor.isAllEmployeesOldestEighteen(employeeCollection.getEmployeesList(),
                 ExecutionType.FOREACH);
         System.out.println("Are all employees oldest 18? - Foreach: " + allEmployeesOldestEighteenWithForeach + "\n");
 
-        boolean allEmployeesOldestEighteenWithIterator = employeesProcessor.checkIfAllEmployeesOldestEighteen(employeeCollection.getEmployeesList(),
+        boolean allEmployeesOldestEighteenWithIterator = employeesProcessor.isAllEmployeesOldestEighteen(employeeCollection.getEmployeesList(),
                 ExecutionType.ITERATOR);
         System.out.println("Are all employees oldest 18? - Iterator: " + allEmployeesOldestEighteenWithIterator + "\n");
 
-        boolean allEmployeesOldestEighteenWithStreamAPI = employeesProcessor.checkIfAllEmployeesOldestEighteen(employeeCollection.getEmployeesList(),
+        boolean allEmployeesOldestEighteenWithStreamAPI = employeesProcessor.isAllEmployeesOldestEighteen(employeeCollection.getEmployeesList(),
                 ExecutionType.STREAM);
         System.out.println("Are all employees oldest 18? - Stream API: " + allEmployeesOldestEighteenWithStreamAPI + "\n");
     }
