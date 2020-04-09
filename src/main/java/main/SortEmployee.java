@@ -47,8 +47,8 @@ public class SortEmployee {
      * Конвертувати HashSet в TreeSet
      * */
 
-    public Set<Employee> convertHashSetToTreeSet(Set<Employee> employeeSet){
-        Set<Employee> employeeTreeSet = new TreeSet<>(new IdSorted().thenComparing(new FirstNameSorted()).thenComparing(new LastNameSorted()));
+    public Set<Employee> convertHashSetToTreeSet(Set<Employee> employeeSet, Comparator<Employee> employeeComparator){
+        Set<Employee> employeeTreeSet = new TreeSet<>(employeeComparator);
         employeeTreeSet.addAll(employeeSet);
         return employeeTreeSet;
     }

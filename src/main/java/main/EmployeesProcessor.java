@@ -91,7 +91,7 @@ public class EmployeesProcessor {
                 employeesMoreTwentyFiveAge.addAll(employeeList);
                 Iterator<Employee> ageIterator = employeesMoreTwentyFiveAge.iterator();
                 while (ageIterator.hasNext()){
-                    if (ageIterator.next().getAge()<25){
+                    if (ageIterator.next().getAge()<=25){
                         ageIterator.remove();
                     }
                 }
@@ -275,9 +275,8 @@ public class EmployeesProcessor {
                 break;
             }
             case STREAM:{
-               employeeList
-                       .forEach(System.out::println);
                 addressOfEmployees = employeeList.stream()
+                        .peek(System.out::println)
                         .map(Employee::getAddress)
                         .collect(Collectors.toSet());
                 break;
@@ -355,15 +354,15 @@ public class EmployeesProcessor {
      * TASK #11
      * Перевірити, чи всі працівники старше 18ти
      */
-    public boolean isAllEmployeesOldestEighteen(List<Employee> employeeList, ExecutionType executionType){
-        boolean isAllEmployeesOldest = false;
+    public boolean isAllEmployeesOlderEighteen(List<Employee> employeeList, ExecutionType executionType){
+        boolean isAllEmployeesOlder = true;
         switch (executionType){
             case FOREACH:{
                 for (Employee e:employeeList){
                     if (e.getAge() <= 18){
-                        isAllEmployeesOldest = false;
+                        isAllEmployeesOlder = false;
                         break;
-                    }else isAllEmployeesOldest =true;
+                    }
                 }
                 break;
             }
@@ -371,18 +370,18 @@ public class EmployeesProcessor {
                 Iterator<Employee> employeeIterator = employeeList.iterator();
                 while (employeeIterator.hasNext()) {
                     if (employeeIterator.next().getAge() <= 18) {
-                        isAllEmployeesOldest = false;
+                        isAllEmployeesOlder = false;
                         break;
-                    } else isAllEmployeesOldest = true;
+                    }
                 }
                 break;
             }
             case STREAM:{
-                isAllEmployeesOldest= employeeList.stream()
+                isAllEmployeesOlder= employeeList.stream()
                         .map(Employee::getAge)
                         .allMatch(num->num>18);
             }
         }
-        return isAllEmployeesOldest;
+        return isAllEmployeesOlder;
     }
 }

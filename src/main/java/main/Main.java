@@ -56,7 +56,7 @@ public class Main {
         /**
          * Конвертувати HashSet в TreeSet
          * */
-        Set<Employee> convertingHashSetToTreeSet = sortEmployee.convertHashSetToTreeSet(employeeSet);
+        Set<Employee> convertingHashSetToTreeSet = sortEmployee.convertHashSetToTreeSet(employeeSet, comparatorProcessor.getComparator(ComparatorType.ID_SORTED));
         System.out.println("Converting HashSet to TreeSet: " + " size " + convertingHashSetToTreeSet.size());
         convertingHashSetToTreeSet.forEach(System.out::println);
         System.out.println();
@@ -239,15 +239,15 @@ public class Main {
          * TASK #11
          * Перевірити, чи всі працівники старше 18ти
          */
-        boolean allEmployeesOldestEighteenWithForeach = employeesProcessor.isAllEmployeesOldestEighteen(employeeCollection.getEmployeesList(),
+        boolean allEmployeesOldestEighteenWithForeach = employeesProcessor.isAllEmployeesOlderEighteen(employeeCollection.getEmployeesList(),
                 ExecutionType.FOREACH);
         System.out.println("Are all employees oldest 18? - Foreach: " + allEmployeesOldestEighteenWithForeach + "\n");
 
-        boolean allEmployeesOldestEighteenWithIterator = employeesProcessor.isAllEmployeesOldestEighteen(employeeCollection.getEmployeesList(),
+        boolean allEmployeesOldestEighteenWithIterator = employeesProcessor.isAllEmployeesOlderEighteen(employeeCollection.getEmployeesList(),
                 ExecutionType.ITERATOR);
         System.out.println("Are all employees oldest 18? - Iterator: " + allEmployeesOldestEighteenWithIterator + "\n");
 
-        boolean allEmployeesOldestEighteenWithStreamAPI = employeesProcessor.isAllEmployeesOldestEighteen(employeeCollection.getEmployeesList(),
+        boolean allEmployeesOldestEighteenWithStreamAPI = employeesProcessor.isAllEmployeesOlderEighteen(employeeCollection.getEmployeesList(),
                 ExecutionType.STREAM);
         System.out.println("Are all employees oldest 18? - Stream API: " + allEmployeesOldestEighteenWithStreamAPI + "\n");
     }
