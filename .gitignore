@@ -13,3 +13,7 @@ screens/
 .idea/encodings.xml
 .idea/misc.xml
 .idea/modules.xml
+.idea/vcs.xml
+.idea/uiDesigner.xml
+.idea/sonarlint
+.idea/workspace.xml
