@@ -1,5 +1,7 @@
 package main;
 
+import exception.RemoveEmployeeException;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,7 +10,7 @@ public class EmployeesProcessor {
      * TASK #1
      * Витягнути ліст імен, Видалити всіх Олегів з ліста (відповідно, щоб у лісті було їх хоча б кілька)
      */
-    public List<String> removeEmployee(List<Employee> employeeList, ExecutionType executionType) {
+    public List<String> removeEmployee(List<Employee> employeeList, ExecutionType executionType, String targetName){
         List<String> removeEmployeeName = new ArrayList<>();
         switch (executionType) {
             case ITERATOR: {
@@ -17,7 +19,7 @@ public class EmployeesProcessor {
                 }
                 Iterator<String> iterator = removeEmployeeName.iterator();
                 while (iterator.hasNext()) {
-                    if (iterator.next().equals("Oleg")) {
+                    if (iterator.next().equals(targetName)) {
                         iterator.remove();
                     }
                 }

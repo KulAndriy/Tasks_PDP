@@ -68,10 +68,10 @@ public class Main {
          * Витягнути ліст імен, Видалити всіх Олегів з ліста (відповідно, щоб у лісті було їх хоча б кілька)
          */
 
-        List<String> removeNameWithIterator = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(),ExecutionType.ITERATOR);
+        List<String> removeNameWithIterator = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(),ExecutionType.ITERATOR, "Oleg");
         System.out.println("List of names without name Oleg by Iterator:  size: " + removeNameWithIterator.size() + "\n" + removeNameWithIterator + "\n");
 
-        List<String> removeNameWithStream = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(),ExecutionType.STREAM);
+        List<String> removeNameWithStream = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(),ExecutionType.STREAM, "Oleg");
         System.out.println("List of names without name Oleg by Stream API:  size: " + removeNameWithStream.size() + "\n" + removeNameWithStream + "\n");
         System.out.println("*************************************************************************************************************************" + "\n");
 
