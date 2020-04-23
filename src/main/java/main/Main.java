@@ -2,6 +2,7 @@ package main;
 
 import comparator.ComparatorProcessor;
 import comparator.ComparatorType;
+import io.IOEmployeeDataToFile;
 
 import java.util.List;
 import java.util.Set;
@@ -12,6 +13,7 @@ public class Main {
         SortEmployee sortEmployee = new SortEmployee();
         EmployeesProcessor employeesProcessor = new EmployeesProcessor();
         ComparatorProcessor comparatorProcessor = new ComparatorProcessor();
+        IOEmployeeDataToFile writeEmployeeDataToFile = new IOEmployeeDataToFile();
 
         /**
          * Create a HashSet collection
@@ -250,6 +252,12 @@ public class Main {
         boolean allEmployeesOldestEighteenWithStreamAPI = employeesProcessor.isAllEmployeesOlderEighteen(employeeCollection.getEmployeesList(),
                 ExecutionType.STREAM);
         System.out.println("Are all employees oldest 18? - Stream API: " + allEmployeesOldestEighteenWithStreamAPI + "\n");
+
+
+        System.out.println("The collection was written to the file");
+        writeEmployeeDataToFile.writeToFile();
+        System.out.println("The collection was read from the file");
+        writeEmployeeDataToFile.readFromFile();
     }
 
 
