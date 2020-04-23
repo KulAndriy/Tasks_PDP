@@ -13,7 +13,7 @@ public class TestExc {
      * TASK #1
      * Витягнути ліст імен, Видалити всіх Олегів з ліста (відповідно, щоб у лісті було їх хоча б кілька)
      */
-    public List<String> removeEmployee(List<Employee> employeeList, ExecutionType executionType, String targetName) throws RemoveEmployeeException {
+    public List<String> removeEmployee(List<Employee> employeeList, ExecutionType executionType, String targetName) throws NoSuchEmployeeException {
         List<String> removeEmployeeName = new ArrayList<>();
         switch (executionType) {
             case ITERATOR: {
@@ -21,7 +21,7 @@ public class TestExc {
                     removeEmployeeName.add(e.getFirstName());
                 }
                 if (!removeEmployeeName.contains(targetName))
-                    throw new RemoveEmployeeException("This exception was thrown because the name " + targetName + " is absent in the List.");
+                    throw new NoSuchEmployeeException("This exception was thrown because the name " + targetName + " is absent in the List.");
                 Iterator<String> iterator = removeEmployeeName.iterator();
                 while (iterator.hasNext()) {
                     if (iterator.next().equals(targetName)) {
@@ -35,7 +35,7 @@ public class TestExc {
                         .map(Employee::getFirstName)
                         .collect(Collectors.toList());
                 if (!removeEmployeeName.contains(targetName))
-                    throw new RemoveEmployeeException("This exception was thrown because the name " + targetName + " is absent in the List.");
+                    throw new NoSuchEmployeeException("This exception was thrown because the name " + targetName + " is absent in the List.");
                 removeEmployeeName.removeIf(s -> s.equals(targetName));
                 break;
             }
@@ -49,7 +49,7 @@ public class TestExc {
      */
     public List<String> getEmployeesWithAgeMoreThanSeventy(List<Employee> employeeList, ExecutionType executionType, String concatedStringToLastName, int age) throws EmployeeCollectionIsEmptyException {
         List<String> lastNameOfEmployeesWithConcatenation = new ArrayList<>();
-        String exceptionMessage = "The collection does not have eny elements with age ";
+        String exceptionMessage = "The collection does not have any elements with age ";
         switch (executionType){
             case FOREACH:{
                 for (Employee e:employeeList){

@@ -1,6 +1,8 @@
 package main;
 
-import exception.RemoveEmployeeException;
+import exception.AgeOfEmployeeLessZeroException;
+import exception.EmployeeCollectionIsEmptyException;
+import exception.NoSuchEmployeeException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,13 +12,15 @@ public class EmployeesProcessor {
      * TASK #1
      * Витягнути ліст імен, Видалити всіх Олегів з ліста (відповідно, щоб у лісті було їх хоча б кілька)
      */
-    public List<String> removeEmployee(List<Employee> employeeList, ExecutionType executionType, String targetName){
+    public List<String> removeEmployee(List<Employee> employeeList, ExecutionType executionType, String targetName) throws NoSuchEmployeeException {
         List<String> removeEmployeeName = new ArrayList<>();
         switch (executionType) {
             case ITERATOR: {
                 for (Employee e : employeeList) {
                     removeEmployeeName.add(e.getFirstName());
                 }
+                if (!removeEmployeeName.contains(targetName))
+                    throw new NoSuchEmployeeException("This exception was thrown because the name " + targetName + " is absent in the List.");
                 Iterator<String> iterator = removeEmployeeName.iterator();
                 while (iterator.hasNext()) {
                     if (iterator.next().equals(targetName)) {
@@ -29,7 +33,9 @@ public class EmployeesProcessor {
                 removeEmployeeName = employeeList.stream()
                         .map(Employee::getFirstName)
                         .collect(Collectors.toList());
-                removeEmployeeName.removeIf(s -> s.equals("Oleg"));
+                if (!removeEmployeeName.contains(targetName))
+                    throw new NoSuchEmployeeException("This exception was thrown because the name " + targetName + " is absent in the List.");
+                removeEmployeeName.removeIf(s -> s.equals(targetName));
                 break;
             }
         }
@@ -137,12 +143,9 @@ public class EmployeesProcessor {
                 break;
             }
             case STREAM: {
-            Optional <Employee> employeeOptional = employeeList.stream()
+                    employeeByAddress = employeeList.stream()
                     .filter(s -> s.getAddress().equals(employeeAddress))
-                    .findAny();
-            if (employeeOptional.isPresent()) {
-                employeeByAddress = employeeOptional.get();
-            }
+                    .findAny().orElseThrow(IllegalArgumentException::new);
         }
         break;
     }
@@ -187,33 +190,37 @@ public class EmployeesProcessor {
      * TASK #6
      * Знайти всіх працівників віком більше = 70 років і повернути нову колекцію з прізвищами цих працівників, добавивши до кожного "Stariy Perdun"
      */
-    public List<String> getEmployeesWithAgeMoreThanSeventy(List<Employee> employeeList, ExecutionType executionType, String concatedStringToLastName){
+    public List<String> getEmployeesWithAgeMoreThanSeventy(List<Employee> employeeList, ExecutionType executionType, String concatedStringToLastName, int age) throws EmployeeCollectionIsEmptyException {
         List<String> lastNameOfEmployeesWithConcatenation = new ArrayList<>();
+        String exceptionMessage = "The collection does not have any elements with age ";
         switch (executionType){
             case FOREACH:{
                 for (Employee e:employeeList){
-                    if (e.getAge()>70){
+                    if (e.getAge()>age){
                         lastNameOfEmployeesWithConcatenation.add(e.getLastName().concat(concatedStringToLastName));
                     }
                 }
+                if (lastNameOfEmployeesWithConcatenation.isEmpty()) throw new EmployeeCollectionIsEmptyException(exceptionMessage + age);
                 break;
             }
             case ITERATOR:{
                 Iterator<Employee> ageIterator = employeeList.iterator();
                 while (ageIterator.hasNext()){
                     Employee employee = ageIterator.next();
-                    if (employee.getAge()>70){
+                    if (employee.getAge()>age){
                         lastNameOfEmployeesWithConcatenation.add(employee.getLastName().concat(concatedStringToLastName));
                     }
                 }
+                if (lastNameOfEmployeesWithConcatenation.isEmpty()) throw new EmployeeCollectionIsEmptyException(exceptionMessage + age);
                 break;
             }
             case STREAM:{
                 lastNameOfEmployeesWithConcatenation = employeeList.stream()
-                        .filter(s->s.getAge()>70)
+                        .filter(s->s.getAge()>age)
                         .map(s->s.getLastName().concat(concatedStringToLastName))
                         .collect(Collectors.toList());
             }
+            if (lastNameOfEmployeesWithConcatenation.isEmpty()) throw new EmployeeCollectionIsEmptyException(exceptionMessage + age);
         }
         return lastNameOfEmployeesWithConcatenation;
     }
@@ -356,11 +363,15 @@ public class EmployeesProcessor {
      * TASK #11
      * Перевірити, чи всі працівники старше 18ти
      */
-    public boolean isAllEmployeesOlderEighteen(List<Employee> employeeList, ExecutionType executionType){
+    public boolean isAllEmployeesOlderEighteen(List<Employee> employeeList, ExecutionType executionType) throws AgeOfEmployeeLessZeroException{
         boolean isAllEmployeesOlder = true;
+        String exceptionMessage = "The age of employee less than zero!!!! ";
         switch (executionType){
             case FOREACH:{
                 for (Employee e:employeeList){
+                    if (e.getAge() < 0){
+                        throw new AgeOfEmployeeLessZeroException(exceptionMessage + e.getFirstName());
+                    }
                     if (e.getAge() <= 18){
                         isAllEmployeesOlder = false;
                         break;
@@ -370,8 +381,13 @@ public class EmployeesProcessor {
             }
             case ITERATOR:{
                 Iterator<Employee> employeeIterator = employeeList.iterator();
+                int age;
                 while (employeeIterator.hasNext()) {
-                    if (employeeIterator.next().getAge() <= 18) {
+                    age = employeeIterator.next().getAge();
+                    if (age < 0){
+                        throw new AgeOfEmployeeLessZeroException(exceptionMessage);
+                    }
+                    if (age <= 18) {
                         isAllEmployeesOlder = false;
                         break;
                     }
@@ -379,6 +395,11 @@ public class EmployeesProcessor {
                 break;
             }
             case STREAM:{
+                for (Employee e:employeeList){
+                    if (e.getAge() < 0){
+                        throw new AgeOfEmployeeLessZeroException(exceptionMessage + e.getFirstName());
+                    }
+                }
                 isAllEmployeesOlder= employeeList.stream()
                         .map(Employee::getAge)
                         .allMatch(num->num>18);

@@ -17,8 +17,8 @@ public class Test {
         try {
             List<String> removeNameWithIterator = testExc.removeEmployee(employeeCollection.getEmployeesList(), ExecutionType.ITERATOR, "Ole");
             System.out.println("List of names without name Oleg by Iterator:  size: " + removeNameWithIterator.size() + "\n" + removeNameWithIterator + "\n");
-        } catch (RemoveEmployeeException e) {
-            System.err.println(e.getMessage());
+        } catch (NoSuchEmployeeException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
@@ -26,11 +26,14 @@ public class Test {
         try {
             List<String> removeNameWithStream = testExc.removeEmployee(employeeCollection.getEmployeesList(), ExecutionType.STREAM, "Ole");
             System.out.println("List of names without name Oleg by Stream API:  size: " + removeNameWithStream.size() + "\n" + removeNameWithStream + "\n");
-        } catch (RemoveEmployeeException e) {
-            System.err.println(e.getMessage());
+        } catch (NoSuchEmployeeException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        System.out.println("*************************************************************************************************************************" + "\n");
+        finally {
+            System.out.println("*************************************************************************************************************************" + "\n");
+
+        }
 
         /**
          * TASK #6
@@ -43,7 +46,7 @@ public class Test {
             employeesWithAgeMoreThanSeventyForeach.forEach(System.out::println);
             System.out.println();
         } catch (EmployeeCollectionIsEmptyException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
@@ -54,7 +57,7 @@ public class Test {
             employeesWithAgeMoreThanSeventyIterator.forEach(System.out::println);
             System.out.println();
         } catch (EmployeeCollectionIsEmptyException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
@@ -65,9 +68,10 @@ public class Test {
             employeesWithAgeMoreThanSeventyStreamAPI.forEach(System.out::println);
             System.out.println();
         } catch (EmployeeCollectionIsEmptyException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
             e.printStackTrace();
+        }finally {
+            System.out.println("*************************************************************************************************************************" + "\n");
         }
-        System.out.println("*************************************************************************************************************************" + "\n");
     }
 }
