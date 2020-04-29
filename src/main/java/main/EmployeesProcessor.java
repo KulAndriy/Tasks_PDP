@@ -12,7 +12,7 @@ public class EmployeesProcessor {
      * TASK #1
      * Витягнути ліст імен, Видалити всіх Олегів з ліста (відповідно, щоб у лісті було їх хоча б кілька)
      */
-    public List<String> removeEmployee(List<Employee> employeeList, ExecutionType executionType, String targetName) throws NoSuchEmployeeException {
+    public List<String> removeEmployee(List<Employee> employeeList, ExecutionType executionType, String targetName) {
         List<String> removeEmployeeName = new ArrayList<>();
         switch (executionType) {
             case ITERATOR: {
@@ -200,7 +200,6 @@ public class EmployeesProcessor {
                         lastNameOfEmployeesWithConcatenation.add(e.getLastName().concat(concatedStringToLastName));
                     }
                 }
-                if (lastNameOfEmployeesWithConcatenation.isEmpty()) throw new EmployeeCollectionIsEmptyException(exceptionMessage + age);
                 break;
             }
             case ITERATOR:{
@@ -211,7 +210,6 @@ public class EmployeesProcessor {
                         lastNameOfEmployeesWithConcatenation.add(employee.getLastName().concat(concatedStringToLastName));
                     }
                 }
-                if (lastNameOfEmployeesWithConcatenation.isEmpty()) throw new EmployeeCollectionIsEmptyException(exceptionMessage + age);
                 break;
             }
             case STREAM:{
@@ -220,8 +218,8 @@ public class EmployeesProcessor {
                         .map(s->s.getLastName().concat(concatedStringToLastName))
                         .collect(Collectors.toList());
             }
-            if (lastNameOfEmployeesWithConcatenation.isEmpty()) throw new EmployeeCollectionIsEmptyException(exceptionMessage + age);
         }
+        if (lastNameOfEmployeesWithConcatenation.isEmpty()) throw new EmployeeCollectionIsEmptyException(exceptionMessage + age);
         return lastNameOfEmployeesWithConcatenation;
     }
 
