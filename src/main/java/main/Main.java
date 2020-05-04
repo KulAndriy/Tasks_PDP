@@ -2,6 +2,9 @@ package main;
 
 import comparator.ComparatorProcessor;
 import comparator.ComparatorType;
+import exception.AgeOfEmployeeLessZeroException;
+import exception.EmployeeCollectionIsEmptyException;
+import exception.NoSuchEmployeeException;
 
 import java.util.List;
 import java.util.Set;
@@ -67,12 +70,22 @@ public class Main {
          * TASK #1
          * Витягнути ліст імен, Видалити всіх Олегів з ліста (відповідно, щоб у лісті було їх хоча б кілька)
          */
+        try {
+            List<String> removeNameWithIterator = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(), ExecutionType.ITERATOR, "Ole");
+            System.out.println("List of names without name Oleg by Iterator:  size: " + removeNameWithIterator.size() + "\n" + removeNameWithIterator + "\n");
+        } catch (NoSuchEmployeeException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
-        List<String> removeNameWithIterator = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(),ExecutionType.ITERATOR);
-        System.out.println("List of names without name Oleg by Iterator:  size: " + removeNameWithIterator.size() + "\n" + removeNameWithIterator + "\n");
 
-        List<String> removeNameWithStream = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(),ExecutionType.STREAM);
-        System.out.println("List of names without name Oleg by Stream API:  size: " + removeNameWithStream.size() + "\n" + removeNameWithStream + "\n");
+        try {
+            List<String> removeNameWithStream = employeesProcessor.removeEmployee(employeeCollection.getEmployeesList(), ExecutionType.STREAM, "Ole");
+            System.out.println("List of names without name Oleg by Stream API:  size: " + removeNameWithStream.size() + "\n" + removeNameWithStream + "\n");
+        } catch (NoSuchEmployeeException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
         System.out.println("*************************************************************************************************************************" + "\n");
 
         /**
@@ -151,22 +164,38 @@ public class Main {
          * TASK #6
          * Знайти всіх працівників віком більше = 70 років і повернути нову колекцію з прізвищами цих працівників, добавивши до кожного "Stariy Perdun"
          */
-        List<String> employeesWithAgeMoreThanSeventyForeach = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.FOREACH,
-                " Staryy Perdun");
-        System.out.println("The List of Employees Last names where age more than 70 with concatenation by Foreach:  size " + employeesWithAgeMoreThanSeventyForeach.size());
-        employeesWithAgeMoreThanSeventyForeach.forEach(System.out::println);
-        System.out.println();
+        try {
+            List<String> employeesWithAgeMoreThanSeventyForeach = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.FOREACH,
+                    " Staryy Perdun",100);
+            System.out.println("The List of Employees Last names where age more than 70 with concatenation by Foreach:  size " + employeesWithAgeMoreThanSeventyForeach.size());
+            employeesWithAgeMoreThanSeventyForeach.forEach(System.out::println);
+            System.out.println();
+        } catch (EmployeeCollectionIsEmptyException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
-        List<String> employeesWithAgeMoreThanSeventyIterator = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.ITERATOR,
-                " Staryy Perdun");
-        System.out.println("The List of Employees Last names where age more than 70 with concatenation by Iterator:  size " + employeesWithAgeMoreThanSeventyIterator.size());
-        employeesWithAgeMoreThanSeventyIterator.forEach(System.out::println);
-        System.out.println();
+        try {
+            List<String> employeesWithAgeMoreThanSeventyIterator = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.ITERATOR,
+                    " Staryy Perdun", 100);
+            System.out.println("The List of Employees Last names where age more than 70 with concatenation by Iterator:  size " + employeesWithAgeMoreThanSeventyIterator.size());
+            employeesWithAgeMoreThanSeventyIterator.forEach(System.out::println);
+            System.out.println();
+        } catch (EmployeeCollectionIsEmptyException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
-        List<String> employeesWithAgeMoreThanSeventyStreamAPI = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.STREAM,
-                " Staryy Perdun");
-        System.out.println("The List of Employees Last names where age more than 70 with concatenation by Stream API:  size " + employeesWithAgeMoreThanSeventyStreamAPI.size());
-        employeesWithAgeMoreThanSeventyStreamAPI.forEach(System.out::println);
+        try {
+            List<String> employeesWithAgeMoreThanSeventyStreamAPI = employeesProcessor.getEmployeesWithAgeMoreThanSeventy(employeeCollection.getEmployeesList(), ExecutionType.STREAM,
+                    " Staryy Perdun", 100);
+            System.out.println("The List of Employees Last names where age more than 70 with concatenation by Stream API:  size " + employeesWithAgeMoreThanSeventyStreamAPI.size());
+            employeesWithAgeMoreThanSeventyStreamAPI.forEach(System.out::println);
+            System.out.println();
+        } catch (EmployeeCollectionIsEmptyException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
         System.out.println();
         System.out.println("*************************************************************************************************************************" + "\n");
 
@@ -239,17 +268,33 @@ public class Main {
          * TASK #11
          * Перевірити, чи всі працівники старше 18ти
          */
-        boolean allEmployeesOldestEighteenWithForeach = employeesProcessor.isAllEmployeesOlderEighteen(employeeCollection.getEmployeesList(),
-                ExecutionType.FOREACH);
-        System.out.println("Are all employees oldest 18? - Foreach: " + allEmployeesOldestEighteenWithForeach + "\n");
+        try {
+            boolean allEmployeesOldestEighteenWithForeach = employeesProcessor.isAllEmployeesOlderEighteen(employeeCollection.getEmployeesList(),
+                    ExecutionType.FOREACH);
+            System.out.println("Are all employees oldest 18? - Foreach: " + allEmployeesOldestEighteenWithForeach + "\n");
+        } catch (AgeOfEmployeeLessZeroException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
-        boolean allEmployeesOldestEighteenWithIterator = employeesProcessor.isAllEmployeesOlderEighteen(employeeCollection.getEmployeesList(),
-                ExecutionType.ITERATOR);
-        System.out.println("Are all employees oldest 18? - Iterator: " + allEmployeesOldestEighteenWithIterator + "\n");
+        try {
+            boolean  allEmployeesOldestEighteenWithIterator = employeesProcessor.isAllEmployeesOlderEighteen(employeeCollection.getEmployeesList(),
+                    ExecutionType.ITERATOR);
+            System.out.println("Are all employees oldest 18? - Iterator: " + allEmployeesOldestEighteenWithIterator + "\n");
+        } catch (AgeOfEmployeeLessZeroException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
-        boolean allEmployeesOldestEighteenWithStreamAPI = employeesProcessor.isAllEmployeesOlderEighteen(employeeCollection.getEmployeesList(),
-                ExecutionType.STREAM);
-        System.out.println("Are all employees oldest 18? - Stream API: " + allEmployeesOldestEighteenWithStreamAPI + "\n");
+        try {
+            boolean allEmployeesOldestEighteenWithStreamAPI = employeesProcessor.isAllEmployeesOlderEighteen(employeeCollection.getEmployeesList(),
+                    ExecutionType.STREAM);
+            System.out.println("Are all employees oldest 18? - Stream API: " + allEmployeesOldestEighteenWithStreamAPI + "\n");
+        } catch (AgeOfEmployeeLessZeroException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
 
