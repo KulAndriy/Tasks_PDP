@@ -18,7 +18,7 @@ public class EmployeeCollection {
         employeeList.add(new Employee(1, "Oleg", "Barabanov", "Lviv", 23));
         employeeList.add(new Employee(1, "Oleg", "Serhiyshuk", "Kyiv", 26));
         employeeList.add(new Employee(2, "Oleg", "Kostyshyn", "New York", 40));
-        employeeList.add(new Employee(8, "Dmytro", "Baran", "Kyiv", 48));
+        employeeList.add(new Employee(8, "Dmytro", "Baran", "Kyiv", -1));
         employeeList.add(new Employee(5, "Vasyl", "Костин", "Dnipro", 70));
         employeeList.add(new Employee(1, "Andriy", "Barabanov", "Lviv", 23));
         employeeList.add(new Employee(10, "Taras", "Galyk", "Kyiv", 34));
