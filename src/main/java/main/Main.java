@@ -1,5 +1,7 @@
 package main;
 
+import annotation.EmployeeProcessorAnnotationLogic;
+import annotation.EmployeeProcessorTypeAnnotation;
 import comparator.ComparatorProcessor;
 import comparator.ComparatorType;
 import exception.AgeOfEmployeeLessZeroException;
@@ -15,6 +17,9 @@ public class Main {
         SortEmployee sortEmployee = new SortEmployee();
         EmployeesProcessor employeesProcessor = new EmployeesProcessor();
         ComparatorProcessor comparatorProcessor = new ComparatorProcessor();
+        EmployeeProcessorAnnotationLogic annotationLogic = new EmployeeProcessorAnnotationLogic();
+
+        annotationLogic.annotationProcessing();
 
         /**
          * Create a HashSet collection
