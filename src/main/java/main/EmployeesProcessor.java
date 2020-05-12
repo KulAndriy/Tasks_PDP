@@ -3,11 +3,15 @@ package main;
 import exception.AgeOfEmployeeLessZeroException;
 import exception.EmployeeCollectionIsEmptyException;
 import exception.NoSuchEmployeeException;
+import org.apache.log4j.Logger;
+
 
 import java.util.*;
+
 import java.util.stream.Collectors;
 
 public class EmployeesProcessor {
+    public static final Logger logger = Logger.getLogger(EmployeesProcessor.class);
     /**
      * TASK #1
      * Витягнути ліст імен, Видалити всіх Олегів з ліста (відповідно, щоб у лісті було їх хоча б кілька)
