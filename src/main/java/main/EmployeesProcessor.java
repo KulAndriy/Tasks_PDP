@@ -1,17 +1,17 @@
 package main;
 
-import annotation.EmployeeProcessorMethodAnnotation;
-import annotation.EmployeeProcessorTypeAnnotation;
+import annotation.MethodAnnotation;
+import annotation.TypeAnnotation;
 import exception.AgeOfEmployeeLessZeroException;
 import exception.EmployeeCollectionIsEmptyException;
 import exception.NoSuchEmployeeException;
 
 import java.util.*;
 import java.util.stream.Collectors;
-@EmployeeProcessorTypeAnnotation
+@TypeAnnotation(lastModified = "7/7/2020")
 public class EmployeesProcessor {
 
-    @EmployeeProcessorMethodAnnotation(taskName = "TASK #1\n" +
+    @MethodAnnotation(taskName = "TASK #1\n" +
             "Витягнути ліст імен, Видалити всіх Олегів з ліста (відповідно, щоб у лісті було їх хоча б кілька)")
     public List<String> removeEmployee(List<Employee> employeeList, ExecutionType executionType, String targetName) {
         List<String> removeEmployeeName = new ArrayList<>();
@@ -43,7 +43,7 @@ public class EmployeesProcessor {
         return removeEmployeeName;
     }
 
-    @EmployeeProcessorMethodAnnotation(taskName = "TASK #2\n" +
+    @MethodAnnotation(taskName = "TASK #2\n" +
             "Витягнути ліст імен,Змінити всіх Андріїв на Василів (2-3 Андрія щоб була у лісті)")
     public List<String> getChangedNameOfEmployee(List<Employee> employeeList, ExecutionType executionType, String targetName, String replacementName){
         List<String> listOfChangedEmployeesName = new ArrayList<>();
@@ -83,7 +83,7 @@ public class EmployeesProcessor {
      * TASK #3
      * Витягнути колекцію працівників віком > 25 років
      */
-    @EmployeeProcessorMethodAnnotation(taskName = "TASK #3\n" +
+    @MethodAnnotation(taskName = "TASK #3\n" +
             "Витягнути колекцію працівників віком > 25 років")
     public List<Employee> getEmployeesMoreTwentyFiveAge(List<Employee> employeeList, ExecutionType executionType){
         List<Employee> employeesMoreTwentyFiveAge = new ArrayList<>();
@@ -120,7 +120,7 @@ public class EmployeesProcessor {
      * TASK #4
      * Знайти будь-якого працівника, якій живе у Львові
      */
-    @EmployeeProcessorMethodAnnotation(taskName = "TASK #4\n" +
+    @MethodAnnotation(taskName = "TASK #4\n" +
             "Знайти будь-якого працівника, якій живе у Львові")
     public Employee getEmployeeByAddress(List<Employee> employeeList, ExecutionType executionType, String employeeAddress){
         Employee employeeByAddress = null;
@@ -159,7 +159,7 @@ public class EmployeesProcessor {
      * TASK #5
      * Знайти чи є серед працівників хтось, хто живе у Києві
      */
-    @EmployeeProcessorMethodAnnotation(taskName = "TASK #5\n" +
+    @MethodAnnotation(taskName = "TASK #5\n" +
             "Знайти чи є серед працівників хтось, хто живе у Києві")
     public boolean isEmployeeLivesByAddress(List<Employee> employeeList, ExecutionType executionType, String address){
         boolean isLivesByAddress = false;

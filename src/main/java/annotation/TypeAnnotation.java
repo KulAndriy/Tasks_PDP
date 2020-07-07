@@ -7,8 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface EmployeeProcessorTypeAnnotation {
+public @interface TypeAnnotation {
 
-    String createdBy() default "Andriy Kulyk";
-    String lastModified() default "5/7/2020";
+    String createdBy() default "created by";
+    String lastModified();
 }

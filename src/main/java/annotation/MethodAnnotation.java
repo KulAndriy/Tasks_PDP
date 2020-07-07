@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface EmployeeProcessorMethodAnnotation {
+public @interface MethodAnnotation {
     String taskName();
 
 }
